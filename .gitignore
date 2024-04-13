@@ -1,0 +1,5 @@
+kolo_id.session
+config.ini
+.idea
+.venv
+__pycache__

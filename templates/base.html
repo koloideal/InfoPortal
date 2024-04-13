@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма отправки данных</title>
+</head>
+<body>
+    <h1>Введите ваше имя и номер</h1>
+    {% for msg in get_flashed_messages() %}
+    <div class="flash">{{ msg }}</div><br>
+    {% endfor %}
+    <form action="{{url_for('contact') }}" method="post">
+        <label for="text">Введите текст сообщения:</label>
+        <input type="text" id="text" name="text" required><br><br>
+
+        <label for="username">Введите юзернейм:</label>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <input type="submit" value="Отправить">
+    </form>
+</body>
+</html>
