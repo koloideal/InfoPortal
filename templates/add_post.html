@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='add_post.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Add Post</title>
+</head>
+<body>
+    {% for category, flash in get_flashed_messages(True) %}
+        <div id="{{category}}">{{flash}}</div>
+    {% endfor %}
+
+    <form action="/add_post" method="post">
+        <div class="title_div">
+          <input name="title" type="text" class="title_input" placeholder="Type title..." maxlength="70" />
+        </div>
+        <!-- TEXT INPUT -->
+        <div class="content_div">
+          <textarea name="content" class="textarea" cols="30" rows="10" placeholder="Type content..."></textarea>
+        </div>
+        <!-- BUTTON -->
+        <div class="button_div">
+          <button class="button" type="submit">
+            <span class="button_text">Отправить</span>
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+    <div id="return">
+        <a href="{{ url_for('main') }}">&#8678;</a>
+    </div>
+    <div id="made">
+        <a class="down_links" href="https://github.com/koloideal" target="_blank">
+            <i>made by</i> <b>kolo</b>
+            <i class="fa-brands fa-github git_ico"></i>
+        </a>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

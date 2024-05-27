@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='show_post_style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div id="title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div id="content">
+        <p style="white-space: pre-line">{{ content }}</p>
+    </div>
+    <div id="return">
+        <a href="{{ url_for('main') }}">&#8678;</a>
+    </div>
+    <div id="made">
+        <a class="down_links" href="https://github.com/koloideal" target="_blank">
+            <i>made by</i> <b>kolo</b>
+            <i class="fa-brands fa-github git_ico"></i>
+        </a>
+    </div>
+</body>
+</html>

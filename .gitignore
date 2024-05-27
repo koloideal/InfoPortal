@@ -1,6 +1,6 @@
-kolo_id.session
-kolo_id.session-journal
 config.ini
 .idea
 .venv
 __pycache__
+databases
+identifier.sqlite

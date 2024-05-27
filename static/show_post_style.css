@@ -1,0 +1,67 @@
+#title {
+
+    font-size: xx-large;
+    font-weight: 700;
+    font-style: normal;
+    text-align: left;
+    font-family: "Comfortaa", sans-serif;
+    margin: 2%;
+    padding-inline: 20px;
+
+}
+
+#content {
+
+    font-size: medium;
+    font-weight: 700;
+    font-family: "Comfortaa", sans-serif;
+    font-style: normal;
+    margin: 2%;
+    padding-inline: 20px;
+
+}
+
+.down_links{
+
+    outline: none;
+    text-decoration: none;
+    color: black;
+    font-size: medium;
+
+}
+
+div#made{
+
+    right: 0;
+    margin-right: 1%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Poetsen One", sans-serif;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    padding-inline: 40px;
+
+}
+
+div#return{
+
+    margin-bottom: 20px;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    padding-inline: 40px;
+    font-size: xxx-large;
+    font-weight: 900;
+    font-family: "Candara", serif;
+
+}
+
+div#return a{
+
+    text-decoration: none;
+    color: black;
+
+}

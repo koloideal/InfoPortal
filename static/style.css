@@ -1,81 +1,190 @@
-.flash{
+#top {
 
-    padding: 10px;
-    font-size: large;
-    font-weight: bolder;
-    width: max-content;
-    height: max-content;
-    color: white;
-    border-radius: 10px;
-    font-family: "Candara", serif;
-    position: absolute;
-    top: 11%;
-    left: 47%;
-
-}
-
-.flash.invalid{
-
-    background-color: red;
-}
-
-.flash.success{
-
-    background-color: green;
-
-}
-
-#main {
-
-    border: 1px solid black;
-    width: 550px;
-    height: 100%;
-    position: absolute;
-    left: 35%;
-    padding: 15px;
-    overflow: auto;
-    background-color: #b8bcb8;
-}
-
-#enter{
-
-    width: max-content;
-    height: max-content;
-    font-family: "Candara", serif;
-
-}
-
-label{
-
-    font-size: larger;
-    font-weight: bolder;
-
-}
-
-#butt{
-
-    background-color: #3fbc33;
-    padding: 7px;
-    font-size: large;
-    font-weight: bolder;
-    width: max-content;
-    height: max-content;
-    color: white;
+    height: 10%;
+    border: 2px solid #393e41;
     border-radius: 15px;
-    font-family: "Candara", serif;
-    border: none
+    background-color: #f6f7eb;
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large;
+    color: #e94f37;
+    font-family: "Poetsen One", sans-serif;
+    margin-bottom: 100px;
+}
+
+
+@-webkit-keyframes scroll {
+    0% {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -webkit-transform: translate(-100%, 0);
+        transform: translate(-100%, 0)
+    }
+}
+
+@-moz-keyframes scroll {
+    0% {
+        -moz-transform: translate(0, 0);
+        transform: translate(0, 0);
+    }
+    100% {
+        -moz-transform: translate(-100%, 0);
+        transform: translate(-100%, 0)
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0)
+    }
+}
+
+.top {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.top span{
+    display: inline-block;
+    padding-left: 100%;
+    -webkit-animation: scroll 8s infinite linear;
+    -moz-animation: scroll 8s infinite linear;
+    animation: scroll 8s infinite linear;
+}
+
+
+#posts ul{
+    list-style-type: none;
+}
+
+#posts div{
+
+    max-width: 50%;
+    margin-left: 23%;
 
 }
 
-#butt:hover{
+/* Стили для заголовка */
+#title a{
 
-    background-color: #00c51b;
+    margin-bottom: 5px;
+    color: black;
+
+}
+#title {
+
+    font-size: xx-large;
+    font-weight: 500;
+    font-style: normal;
+    text-align: left;
+    font-family: "Comfortaa", sans-serif;
 
 }
 
-#butt:active{
+/* Стили для анонса */
+#announce {
+    font-size: medium;
+    color: black; /* Цвет текста */
+    margin-bottom: 100px; /* Отступ снизу */
+    background-color: #f6f7eb;
+    font-weight: 700;
+    font-family: "Comfortaa", sans-serif;
+    font-style: normal;
+    font-optical-sizing: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    border-radius: 7px;
+    border: 2px solid #393e41;
+    box-shadow: 2px 2px 2px gray;
+}
 
-    box-shadow: #b8bcb8;
+#title a {
+    text-decoration: none;
+}
+
+#title a:hover {
+    text-decoration: none;
+}
+
+.git_ico {
+
+  font-size: 25px;
 
 }
 
+.down_links{
+
+    outline: none;
+    text-decoration: none;
+    color: black;
+    font-size: medium;
+
+}
+
+div#made{
+
+    right: 0;
+    margin-right: 1%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: "Poetsen One", sans-serif;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    height: 50px;
+    padding-inline: 40px;
+
+}
+
+div#add_post{
+
+    margin-bottom: 20px;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    padding-inline: 40px;
+    font-size: xx-large;
+    color: black;
+
+}
+
+div#add_post a{
+
+    text-decoration: none;
+    color: black;
+
+}
+
+div#when_empty{
+
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: xxx-large;
+    font-weight: 500;
+    font-style: normal;
+    font-family: "Poetsen One", sans-serif;
+
+}
+
+#when_empty a{
+
+    text-decoration: none;
+
+}
+
+#when_empty a:hover{
+
+    font-weight: bold;
+    text-decoration: none;
+
+}

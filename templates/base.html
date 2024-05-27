@@ -2,41 +2,57 @@
 
 <html lang="en">
 
-<head>
+    <head>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <title>Форма отправки данных</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&family=Overpass:ital,wght@0,100..900;1,100..900&family=Poetsen+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Encode+Sans+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <title>Информационный портал</title>
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <div id="main">
+        <main>
 
-        <div id="enter">
-
-            <h1>Введите сообщение и юзернейм</h1>
-
-            <form action="{{url_for('contact') }}" method="post">
-
-                <label for="username">Юзернейм:</label><br>
-                <input type="text" id="username" name="username" required><br><br>
-
-                <label for="text">Сообщение:</label><br>
-                <textarea rows="7" cols="50" id="text" name="text" required> </textarea><br><br>
-
-                <input type="submit" id="butt" value="Отправить">
-
-            </form>
-
-            {% for cat, msg in get_flashed_messages(True) %}
-                <div class="flash {{ cat }}">{{ msg }}</div>
-            {% endfor %}
-
+        <div id="top">
+            <h1 class="top"><span>kolo's information portal</span></h1>
         </div>
 
-    </div>
+        {% if not posts %}
+            <div id="when_empty">
+                <p>Empty...<a href="{{ url_for('add_post') }}"> Add post</a></p>
+            </div>
+        {% else %}
+        <div id="posts">
 
-</body>
+            <ul>
+            {% for post in posts %}
+            <li>
+            <div id="title">
+                <p><a href="{{ url_for('show_posts', id_post=post[0])}}">{{post[1]}}</a></p>
+            </div>
+            <div id="announce">
+                <p>{{ post[2][:90] if post[2]|length <= 100 else (post[2][:90].rstrip() + '...')}}</p>
+            </div>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
+        <div id="add_post">
+            <a href="{{ url_for('add_post') }}">&#10010;</a>
+        </div>
+
+        <div id="made">
+            <a class="down_links" href="https://github.com/koloideal" target="_blank">
+                <i>made by</i> <b>kolo</b>
+                <i class="fa-brands fa-github git_ico"></i>
+            </a>
+        </div>
+    </main>
+    </body>
 </html>
