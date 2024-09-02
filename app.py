@@ -13,6 +13,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 app = Flask(__name__)
+
 app.config["SECRET_KEY"] = config['Flask']['SECRET_KEY']
 app.config['DATABASE'] = config['Flask']['DATABASE']
 app.config['DEBUG'] = config['Flask']['DEBUG']

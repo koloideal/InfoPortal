@@ -1,6 +1,5 @@
-config.ini
 .idea
-.venv
+venv
 __pycache__
 databases
 identifier.sqlite
