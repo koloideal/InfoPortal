@@ -3,3 +3,4 @@ venv
 __pycache__
 databases
 identifier.sqlite
+secret_data/
