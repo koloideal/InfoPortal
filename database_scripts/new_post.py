@@ -2,7 +2,7 @@ def new_post() -> str:
 
     query = '''
 
-        INSERT INTO posts VALUES(NULL, ?, ?, ?)
+        INSERT INTO posts VALUES(?, ?, ?, ?)
 
     '''
 

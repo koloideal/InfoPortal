@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, g
+from flask import Flask, render_template, request, flash
 import configparser
 import os
 from database_scripts.ConnectDatabase import ConnectDatabase
@@ -6,7 +6,10 @@ from database_scripts.get_posts import get_posts
 from database_scripts.get_post import get_post
 from database_scripts.create_table import create_table
 from database_scripts.new_post import new_post
-from datetime import datetime
+from database_scripts.get_max_id import get_max_id
+import time
+import math
+import mysql.connector
 
 os.makedirs('databases', exist_ok=True)
 
@@ -17,16 +20,11 @@ config.read('secret_data/config.ini')
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = config['Flask']['SECRET_KEY']
-app.config['MySQL']['user'] = config['MySQL']['user']
-app.config['MySQL']['password'] = config['MySQL']['password']
-app.config['MySQL']['host'] = config['MySQL']['host']
-app.config['MySQL']['port'] = config['MySQL']['port']
-app.config['MySQL']['database'] = config['MySQL']['database']
 app.config['DEBUG'] = config['Flask']['DEBUG']
 
-CONNECT = ConnectDatabase(app.config['MySQL']['user'],
-                          app.config['MySQL']['password'],
-                          app.config['MySQL']['database'])
+CONNECT = mysql.connector.connect(config['MySQL']['user'],
+                                  config['MySQL']['password'],
+                                  config['MySQL']['database'])
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -68,7 +66,17 @@ def add_post():
 
                 with CONNECT as cursor:
 
-                    result = cursor.execute(new_post(), (title, content, datetime.now()))
+                    max_id = cursor.execute(get_max_id())
+
+                    max_id = max_id if max_id else 0
+
+                with CONNECT as cursor:
+
+                    result = cursor.execute(new_post(),
+                                            (int(max_id) + 1,
+                                             title,
+                                             content,
+                                             math.floor(time.time()), ))
 
                 if result[0]:
 

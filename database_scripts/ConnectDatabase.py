@@ -24,11 +24,12 @@ class ConnectDatabase:
                                                   port=self.port,
                                                   database=self.database)
 
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(buffered=True)
 
         return self.cursor
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+
         self.connection.commit()
 
         self.cursor.close()
