@@ -1,98 +1,38 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, g
 import configparser
 import os
-import sqlite3
-from sql_scripts import *
-import time
-import math
+from database_scripts.ConnectDatabase import ConnectDatabase
+from database_scripts.get_posts import get_posts
+from database_scripts.get_post import get_post
+from database_scripts.create_table import create_table
+from database_scripts.new_post import new_post
+from datetime import datetime
 
 os.makedirs('databases', exist_ok=True)
 
 config = configparser.ConfigParser()
 
-config.read('config.ini')
+config.read('secret_data/config.ini')
 
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = config['Flask']['SECRET_KEY']
-app.config['DATABASE'] = config['Flask']['DATABASE']
+app.config['MySQL']['user'] = config['MySQL']['user']
+app.config['MySQL']['password'] = config['MySQL']['password']
+app.config['MySQL']['host'] = config['MySQL']['host']
+app.config['MySQL']['port'] = config['MySQL']['port']
+app.config['MySQL']['database'] = config['MySQL']['database']
 app.config['DEBUG'] = config['Flask']['DEBUG']
 
-app.config.update(dict(DATABASE=os.path.join(app.root_path, 'databases/database.db')))
-
-
-def create_table_in_db():
-
-    connection = sqlite3.connect(app.config['DATABASE'])
-    cursor = connection.cursor()
-
-    cursor.execute(sql_create_database())
-
-    connection.commit()
-
-    cursor.close()
-    connection.close()
-
-
-def get_post(id):
-
-    connection = sqlite3.connect(app.config['DATABASE'])
-    cursor = connection.cursor()
-
-    cursor.execute(sql_get_post_database(), (id,))
-
-    result = cursor.fetchone()
-
-    cursor.close()
-    connection.close()
-
-    return result
-
-
-def get_posts():
-
-    connection = sqlite3.connect(app.config['DATABASE'])
-    cursor = connection.cursor()
-
-    cursor.execute(sql_get_posts_database())
-
-    result = cursor.fetchall()
-
-    cursor.close()
-    connection.close()
-
-    return result
-
-
-def new_post(title, content):
-
-    try:
-
-        date = math.floor(time.time())
-
-        connection = sqlite3.connect(app.config['DATABASE'])
-        cursor = connection.cursor()
-
-        cursor.execute(sql_new_post_database(), (title, content, date))
-
-        connection.commit()
-
-        cursor.close()
-        connection.close()
-
-    except Exception as e:
-
-        return False, e
-
-    else:
-
-        return True, None
+CONNECT = ConnectDatabase(app.config['MySQL']['user'],
+                          app.config['MySQL']['password'],
+                          app.config['MySQL']['database'])
 
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-
-    data = get_posts()
+    with CONNECT as cursor:
+        data = cursor.execute(get_posts())
 
     return render_template('base.html', posts=data)
 
@@ -100,7 +40,9 @@ def main():
 @app.route('/posts/<int:id_post>')
 def show_posts(id_post):
 
-    data = get_post(id_post)
+    with CONNECT as cursor:
+
+        data = cursor.execute(get_post(),(id_post,))
 
     title = data[1]
     content = data[2]
@@ -124,7 +66,9 @@ def add_post():
 
             else:
 
-                result = new_post(title, content)
+                with CONNECT as cursor:
+
+                    result = cursor.execute(new_post(), (title, content, datetime.now()))
 
                 if result[0]:
 
@@ -149,8 +93,9 @@ def add_post():
 
 @app.before_request
 def before_request():
-    create_table_in_db()
+    with CONNECT as cursor:
+        cursor.execute(create_table())
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=bool(int(app.config['Flask']['DEBUG'])))
