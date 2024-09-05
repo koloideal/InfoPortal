@@ -10,7 +10,6 @@ import time
 import math
 from flask_mysqldb import MySQL
 
-
 os.makedirs('databases', exist_ok=True)
 
 config = configparser.ConfigParser()
@@ -30,8 +29,7 @@ mysql = MySQL(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def main():
-
-    cursor = mysql.connect.cursor()
+    cursor = mysql.connection.cursor()
     cursor.execute(get_posts())
     data = cursor.fetchall()
 
@@ -40,10 +38,9 @@ def main():
 
 @app.route('/posts/<int:id_post>')
 def show_posts(id_post):
-
     cursor = mysql.connection.cursor()
     cursor.execute(get_post(), (id_post,))
-    data = cursor.fetchall()
+    data = cursor.fetchone()
 
     title = data[1]
     content = data[2]
@@ -53,7 +50,6 @@ def show_posts(id_post):
 
 @app.route('/add_post', methods=['GET', 'POST'])
 def add_post():
-
     if request.method == 'POST':
 
         try:
@@ -73,21 +69,17 @@ def add_post():
 
                 max_id = cursor.fetchone()
 
-                max_id = max_id if max_id else 0
+                max_id = max_id[0] if max_id[0] else 0
 
-                result = cursor.execute(new_post(),
-                                        (int(max_id) + 1,
-                                         title,
-                                         content,
-                                         math.floor(time.time()),))
+                cursor.execute(new_post(),
+                               (int(max_id) + 1,
+                                title,
+                                content,
+                                math.floor(time.time()),))
 
-                if result[0]:
+                mysql.connection.autocommit(on=True)
 
-                    flash('Post added successfully', category='success')
-
-                else:
-
-                    flash(str(result[1]), category='bad')
+                flash('Post added successfully', category='success')
 
                 return render_template('add_post.html')
 
@@ -104,7 +96,6 @@ def add_post():
 
 @app.before_request
 def before_request():
-
     cursor = mysql.connect.cursor()
     cursor.execute(create_table())
 

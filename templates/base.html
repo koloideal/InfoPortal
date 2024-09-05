@@ -35,7 +35,7 @@
                 <p><a href="{{ url_for('show_posts', id_post=post[0])}}">{{post[1]}}</a></p>
             </div>
             <div id="announce">
-                <p>{{ post[2][:90] if post[2]|length <= 100 else (post[2][:90].rstrip() + '...')}}</p>
+                <p>{{ post[2][:90] if post[2]|length <= 100 else (post[2][:86].rstrip() + '...')}}</p>
             </div>
             </li>
             {% endfor %}
