@@ -19,7 +19,7 @@ config.read('secret_data/config.ini')
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = config['Flask']['SECRET_KEY']
-app.config['DEBUG'] = config['Flask']['DEBUG']
+app.config['DEBUG'] = bool(int(config['Flask']['DEBUG']))
 app.config['MYSQL_USER'] = config['MySQL']['user']
 app.config['MYSQL_PASSWORD'] = config['MySQL']['password']
 app.config['MYSQL_DB'] = config['MySQL']['database']
@@ -101,4 +101,5 @@ def before_request():
 
 
 if __name__ == '__main__':
-    app.run(debug=bool(int(app.config['Flask']['DEBUG'])))
+
+    app.run(debug=app.config['DEBUG'])
